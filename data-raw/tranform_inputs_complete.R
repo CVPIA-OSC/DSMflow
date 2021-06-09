@@ -13,8 +13,8 @@ watershed_ordering <- read_csv('data-raw/watershed_ordering.csv')
 usethis::use_data(watershed_ordering, overwrite = TRUE)
 
 # prep calsim data ------------
-calsim <- read_rds('data-raw/MikeWrightCalSimOct2017/cvpia_calsim.rds')
-cvpia_nodes <- read_csv('data-raw/MikeWrightCalSimOct2017/cvpia_calsim_nodes.csv', skip = 1)
+calsim <- read_rds('data-raw/CALSIM_BiOp//cvpia_calsim.rds')
+cvpia_nodes <- read_csv('data-raw/CALSIM_BiOp//cvpia_calsim_nodes.csv', skip = 1)
 watersheds <- cvpia_nodes$watershed
 
 need_split_habitat <- cvpia_nodes$calsim_habitat_flow %>% str_detect(', ')
@@ -251,12 +251,12 @@ dimnames(proportion_diverted) <- list(watershed_ordering$watershed, month.abb[1:
 usethis::use_data(proportion_diverted, overwrite = TRUE)
 
 # misc flow nodes ----
-cs <- read_csv('data-raw/MikeWrightCalSimOct2017/C1_C169.csv', skip = 1) %>%
+cs <- read_csv('data-raw/CALSIM_BiOp//C1_C169.csv', skip = 1) %>%
   select(date = X2, C134, C165, C116, C123, C124, C125, C109) %>%
   filter(!is.na(date)) %>%
   mutate(date = dmy(date))
 
-ds <- read_csv('data-raw/MikeWrightCalSimOct2017/D100_D403.csv', skip = 1) %>%
+ds <- read_csv('data-raw/CALSIM_BiOp//D100_D403.csv', skip = 1) %>%
   select(date = X2, D160, D166A, D117, D124, D125, D126) %>%
   filter(!is.na(date)) %>%
   mutate(date = dmy(date))
@@ -648,3 +648,4 @@ swp_exports <- calsim %>%
 rownames(swp_exports) <- month.abb
 
 usethis::use_data(swp_exports, overwrite = TRUE)
+
