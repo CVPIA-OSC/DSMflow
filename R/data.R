@@ -470,11 +470,14 @@
 #' @description The proportion of delta inflow diverted from 1980-2000.
 #'
 #' @format A 3 dimensional array: 12 by 21 by 2 [months, years, deltas]
+#'\describe{
+#' \item{[ , , 1] North Delta}{represented with CALSIM II nodes (D403A + D403B + D403C + D403D + D404) / (C400 + C157)
+#' north delta diversions divided by north delta inflow in cubic feet per second}
 #'
-#' [ , , 1] North Delta
-#'
-#' [ , , 2] South Delta
-#'
+#' \item{[ , , 2] South Delta}{represented with CALSIM II nodes
+#' (D418 + D419 + D412 + D410 + D413 + D409B + D416 + D408_OR + D408_VC) / (C401B + C504 + C508 + C644)
+#' south delta diversions divided by south delta inflow in cubic feet per second}
+#'}
 #' @details
 #' The North Delta is defined as the area west of and including the Sacramento River below Freeport to Chips Island.
 #'
@@ -562,7 +565,7 @@
 "stockton_flow"
 
 #' @title CVP Exports
-#' @description Total exports for CVP in cms. Value is obtained using CALSIM variable DEL_CVP_EXP.
+#' @description Total exports for Central Valley Project (CVP) operations in cms. Value is obtained using CALSIM II variable DEL_CVP_EXP.
 #' @format A matrix with months (1-12) as rows and years (1980-1999) as columns
 #' @details
 #' The flows here are obtained from a CALSIM II run designed for the structured

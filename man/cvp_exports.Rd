@@ -17,7 +17,7 @@ A matrix with months (1-12) as rows and years (1980-1999) as columns
 cvp_exports
 }
 \description{
-Total exports for CVP in cms. Value is obtained using CALSIM variable DEL_CVP_EXP.
+Total exports for Central Valley Project (CVP) operations in cms. Value is obtained using CALSIM II variable DEL_CVP_EXP.
 }
 \details{
 The flows here are obtained from a CALSIM II run designed for the structured

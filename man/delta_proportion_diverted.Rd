@@ -6,10 +6,14 @@
 \title{Delta Proportion Diverted}
 \format{
 A 3 dimensional array: 12 by 21 by 2 [months, years, deltas]
+\describe{
+\item{[ , , 1] North Delta}{represented with CALSIM II nodes (D403A + D403B + D403C + D403D + D404) / (C400 + C157)
+north delta diversions divided by north delta inflow in cubic feet per second}
 
-[ , , 1] North Delta
-
-[ , , 2] South Delta
+\item{[ , , 2] South Delta}{represented with CALSIM II nodes
+(D418 + D419 + D412 + D410 + D413 + D409B + D416 + D408_OR + D408_VC) / (C401B + C504 + C508 + C644)
+south delta diversions divided by south delta inflow in cubic feet per second}
+}
 }
 \usage{
 delta_proportion_diverted
