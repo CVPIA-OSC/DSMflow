@@ -450,11 +450,11 @@
 #' @description The delta inflow in cubic meters per second from 1980-1999.
 #'
 #' @format A 3 dimensional array: 12 by 20 by 2 (months, years, deltas)
+#'\describe{
+#' \item{[ , , 1] North Delta} {represented with CALSIM II nodes C400 + C157}
 #'
-#' [ , , 1] North Delta represented with CALSIM II nodes C400 + C157
-#'
-#' [ , , 2] South Delta represented with CALSIM II nodes C401B + C504 + C508 + C644
-#'
+#' \item{[ , , 2] South Delta} {represented with CALSIM II nodes C401B + C504 + C508 + C644}
+#'}
 #' @details
 #' The North Delta is defined as the area west of and including the Sacramento River
 #' below Freeport to Chips Island.
