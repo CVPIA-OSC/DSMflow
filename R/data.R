@@ -451,9 +451,9 @@
 #'
 #' @format A 3 dimensional array: 12 by 20 by 2 (months, years, deltas)
 #'
-#' [ , , 1] North Delta
+#' [ , , 1] North Delta represented with CALSIM II nodes C400 + C157
 #'
-#' [ , , 2] South Delta
+#' [ , , 2] South Delta represented with CALSIM II nodes C401B + C504 + C508 + C644
 #'
 #' @details
 #' The North Delta is defined as the area west of and including the Sacramento River
