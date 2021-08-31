@@ -15,33 +15,33 @@ reference:
 - title: CALSIM II Data Sets
   desc: Flow related data sets used by the CVPIA Population Models
   contents:
-  - flows_cfs
   - bypass_flows
+  - cvp_exports
+  - delta_cross_channel_closed
   - delta_flows
   - delta_inflow
   - delta_proportion_diverted
   - delta_total_diverted
-  - total_diverted
+  - flows_cfs
+  - freeport_flow
+  - gates_overtopped
+  - mean_flow
   - proportion_diverted
   - proportion_flow_bypasses
   - proportion_flow_natal
-  - upper_sacramento_flows
-  - mean_flow
-  - delta_cross_channel_closed
-  - gates_overtopped
   - proportion_pulse_flows
-  - freeport_flow
-  - vernalis_flow
   - stockton_flow
-  - wilkins_flow
-  - cvp_exports
   - swp_exports
+  - total_diverted
+  - upper_sacramento_flows
+  - vernalis_flow
+  - wilkins_flow
 - title: Helpers
   desc: Functions and datasets for convenience
   contents:
-  - watershed_ordering
   - cfs_to_cms
   - create_model_array
+  - watershed_ordering
 
 navbar:
   structure:
