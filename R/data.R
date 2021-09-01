@@ -451,9 +451,9 @@
 #'
 #' @format A 3 dimensional array: 12 by 20 by 2 (months, years, deltas)
 #'\describe{
-#' \item{[ , , 1] North Delta} {represented with CALSIM II nodes C400 + C157}
+#' \item{[ , , 1] North Delta}{represented with CALSIM II nodes C400 + C157}
 #'
-#' \item{[ , , 2] South Delta} {represented with CALSIM II nodes C401B + C504 + C508 + C644}
+#' \item{[ , , 2] South Delta}{represented with CALSIM II nodes C401B + C504 + C508 + C644}
 #'}
 #' @details
 #' The North Delta is defined as the area west of and including the Sacramento River
@@ -492,11 +492,11 @@
 #' @description The total diverted of delta inflow in cubic meters per second from 1980-2000.
 #'
 #' @format A 3 dimensional array: 12 by 21 by 2 (months, years, deltas)
+#'\describe{
+#' \item{[ , , 1] North Delta}{represented with CALSIM II nodes D403A + D403B + D403C + D403D + D404, north delta diversions}
 #'
-#' [ , , 1] North Delta
-#'
-#' [ , , 2] South Delta
-#'
+#' \item{[ , , 2] South Delta}{represented with CALSIM II nodes D418 + D419 + D412 + D410 + D413 + D409B + D416 + D408_OR + D408_VC, south delta diversions}
+#'}
 #' @details
 #' The North Delta is defined as the area west of and including the Sacramento River below Freeport to Chips Island.
 #'

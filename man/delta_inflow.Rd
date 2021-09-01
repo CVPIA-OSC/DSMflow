@@ -7,9 +7,9 @@
 \format{
 A 3 dimensional array: 12 by 20 by 2 (months, years, deltas)
 \describe{
-\item{[ , , 1] North Delta} {represented with CALSIM II nodes C400 + C157}
+\item{[ , , 1] North Delta}{represented with CALSIM II nodes C400 + C157}
 
-\item{[ , , 2] South Delta} {represented with CALSIM II nodes C401B + C504 + C508 + C644}
+\item{[ , , 2] South Delta}{represented with CALSIM II nodes C401B + C504 + C508 + C644}
 }
 }
 \usage{
