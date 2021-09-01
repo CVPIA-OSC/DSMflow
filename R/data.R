@@ -369,20 +369,27 @@
 #'
 "proportion_flow_bypasses"
 
-#' If gates are overtopped at teh Sutter and Yolo Bypasses
-#' @description A monthly TRUE or FALSE value to describe if the gates are overtopped to the bypasses
+#' Bypass Gates Overtopped
+#' @description A monthly boolean representation of bypasses overtopped
 #' (years 1980-2000) for use with the CVPIA SIT Salmon Population Model to
 #' apportion fish onto the bypasses.
 #' @format a 12 by 21 by 2 array (month, year, bypass):
+#'\describe{
+#' \item{[ , , 1] = Sutter Bypass}{TRUE if D117 + D124 + D125 + D126 + C137 >= 100 cfs}
 #'
-#' [ , , 1] = Sutter Bypass represented with CALSIM II nodes (D117 + D124 + D125 + D126)/C116
-#'
-#' [ , , 2] = Yolo Bypass represented with CALSIM II nodes D160/C134
-#'
+#' \item{[ , , 2] = Yolo Bypass}{TRUE if D160 + C157 >= 100 cfs}
+#'}
 #' @source
 #' \itemize{
-#'   \item \strong{Data Wrangling:} Erin Cain  \email{ecain@@flowwest.com}
+#'   \item \strong{Data Wrangling:} Sadie Gill \email{sgill@@flowwest.com}, Erin Cain \email{ecain@@flowwest.com}
+#'   \item \strong{Node Selection:} Mark Tompkins \email{mtompkins@@flowwest.com}
+#'   \item \strong{CALSIM Model Output:} Michael Wright \email{mwright@@usbr.gov}
 #' }
+#' @details The flow upstream and down stream of the bypasses are represented using 'FLOW-CHANNEL'
+#' and 'FLOW-DELIVERY' nodes from CALSIM II. The nodes for each watershed are outlined above.
+#' If the flow into the bypasses is greater than 100 cfs the bypass is considered overtopped.
+#'
+#' \href{https://s3-us-west-2.amazonaws.com/cvpiaflow-r-package/BST_CALSIMII_schematic_040110.jpg}{CALSIM II schematic}
 "gates_overtopped"
 
 # Delta -----
