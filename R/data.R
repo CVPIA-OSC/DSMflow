@@ -41,13 +41,14 @@
 #' @details The flow is represented using 'FLOW-CHANNEL' and 'FLOW-DELIVERY' nodes from CALSIM II.
 #' The nodes and calculation for each watershed are outlined above.
 #'
-#' The Sutter and Yolo Bypasses' flows are stored in a separate dataset
+#' Flows for the Sutter and Yolo Bypasses are stored in a separate dataset
 #' \code{\link{bypass_flows}} to enable the habitat segmentation in the bypasses
 #' according to weir locations.
 #'
 #' The Lower-mid Sacramento River has two nodes, one above Fremont Weir (C134) and one below (C160).
-#' When calculating habitat for the Lower-Mid Sacramento river, calculate the habitat at each flow node and
-#' sum them proportion to the length of stream above and below the weir:
+#' When calculating habitat for the Lower-Mid Sacramento River, calculate the
+#' habitat at each flow node and sum them as a proportion to the length of stream above and below the weir:
+#'
 #' \deqn{35.6/58 * (habitat at C134) + 22.4/58 * (habitat at C160)}
 #'
 #'
