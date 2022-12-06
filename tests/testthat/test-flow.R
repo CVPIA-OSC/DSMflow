@@ -18,6 +18,7 @@ library(lubridate)
 # flow structure ------------------------------------------------------------
 
 test_that("flow structure",  {
+
   expect_equal(dim(flows_cfs$biop_2008_2009), c(972, 31))
   expect_equal(dim(flows_cfs$biop_itp_2018_2019), c(972, 31))
   expect_equal(names(flows_cfs), c("biop_2008_2009","biop_itp_2018_2019"))
