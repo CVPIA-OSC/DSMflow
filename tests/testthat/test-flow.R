@@ -18,12 +18,30 @@ library(lubridate)
 # flow structure ------------------------------------------------------------
 
 test_that("flow structure",  {
-  expect_equal(dim(flows_cfs), c(985,33))
-  expect_equal(dim(freeport_flow), c(12, 21))
-  expect_equal(dim(vernalis_flow), c(12, 21))
-  expect_equal(dim(wilkins_flow), c(12, 21))
-  expect_equal(dim(stockton_flow), c(12, 21))
-  expect_equal(dim(upper_sacramento_flows), c(12, 21))
+  expect_equal(dim(flows_cfs$biop_2008_2009), c(972, 31))
+  expect_equal(dim(flows_cfs$biop_itp_2018_2019), c(972, 31))
+  expect_equal(names(flows_cfs), c("biop_2008_2009","biop_itp_2018_2019"))
+
+  expect_equal(dim(freeport_flow$biop_2008_2009), c(12, 21))
+  expect_equal(dim(freeport_flow$biop_itp_2018_2019), c(12, 21))
+  expect_equal(names(freeport_flow), c("biop_2008_2009","biop_itp_2018_2019"))
+
+  expect_equal(dim(vernalis_flow$biop_2008_2009), c(12, 21))
+  expect_equal(dim(vernalis_flow$biop_itp_2018_2019), c(12, 21))
+  expect_equal(names(vernalis_flow), c("biop_2008_2009","biop_itp_2018_2019"))
+
+  expect_equal(dim(wilkins_flow$biop_2008_2009), c(12, 21))
+  expect_equal(dim(wilkins_flow$biop_itp_2018_2019), c(12, 21))
+  expect_equal(names(wilkins_flow), c("biop_2008_2009","biop_itp_2018_2019"))
+
+  expect_equal(dim(stockton_flow$biop_2008_2009), c(12, 21))
+  expect_equal(dim(stockton_flow$biop_itp_2018_2019), c(12, 21))
+  expect_equal(names(stockton_flow), c("biop_2008_2009","biop_itp_2018_2019"))
+
+  expect_equal(dim(upper_sacramento_flows$biop_2008_2009), c(12, 21))
+  expect_equal(dim(upper_sacramento_flows$biop_itp_2018_2019), c(12, 21))
+  expect_equal(names(upper_sacramento_flows), c("biop_2008_2009","biop_itp_2018_2019"))
+
 })
 
 # TODO
