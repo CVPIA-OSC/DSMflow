@@ -11,22 +11,52 @@ library(lubridate)
 
 # delta structure and values ---------------------------------------------------------
 test_that("delta structure and values", {
+  expect_equal(names(delta_flows$biop_2008_2009), names(delta_flows$biop_itp_2018_2019))
   col_names <- c("date", "n_dlt_inflow_cfs", "s_dlt_inflow_cfs", "n_dlt_div_cfs",
                  "s_dlt_div_cfs", "n_dlt_prop_div", "s_dlt_prop_div")
-  expect_equal(delta_flows$n_dlt_prop_div, delta_flows$n_dlt_div_cfs/delta_flows$n_dlt_inflow_cfs)
-  expect_equal(delta_flows$s_dlt_prop_div, pmin(delta_flows$s_dlt_div_cfs/delta_flows$s_dlt_inflow_cfs, 1))
-  expect_equal(class(delta_flows$date), "Date")
-  expect_equal(class(delta_flows$n_dlt_inflow_cfs), "integer")
-  expect_equal(class(delta_flows$s_dlt_inflow_cfs), "numeric")
-  expect_equal(class(delta_flows$n_dlt_div_cfs), "numeric")
-  expect_equal(class(delta_flows$s_dlt_div_cfs), "numeric")
-  expect_equal(class(delta_flows$n_dlt_prop_div), "numeric")
-  expect_equal(class(delta_flows$n_dlt_prop_div), "numeric")
-  expect_equal(colnames(delta_flows), col_names)
-  expect_equal(dim(delta_inflow), c(12L, 21L, 2L))
-  expect_equal(dim(delta_proportion_diverted), c(12L, 21L, 2L))
-  expect_equal(dim(delta_total_diverted), c(12L, 21L, 2L))
-  expect_equal(dim(delta_cross_channel_closed), c(2L, 12L))
+
+  # values
+  expect_equal(delta_flows$biop_2008_2009$n_dlt_prop_div, delta_flows$biop_2008_2009$n_dlt_div_cfs/delta_flows$biop_2008_2009$n_dlt_inflow_cfs)
+  expect_equal(delta_flows$biop_itp_2018_2019$n_dlt_prop_div, delta_flows$biop_itp_2018_2019$n_dlt_div_cfs/delta_flows$biop_itp_2018_2019$n_dlt_inflow_cfs)
+
+  expect_equal(delta_flows$biop_2008_2009$s_dlt_prop_div, pmin(delta_flows$biop_2008_2009$s_dlt_div_cfs/delta_flows$biop_2008_2009$s_dlt_inflow_cfs, 1))
+  expect_equal(delta_flows$biop_itp_2018_2019$s_dlt_prop_div, pmin(delta_flows$biop_itp_2018_2019$s_dlt_div_cfs/delta_flows$biop_itp_2018_2019$s_dlt_inflow_cfs, 1))
+
+  expect_equal(class(delta_flows$biop_2008_2009$date), "Date")
+  expect_equal(class(delta_flows$biop_itp_2018_2019$date), "Date")
+
+  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_inflow_cfs), "numeric")
+  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_inflow_cfs), "numeric")
+
+  expect_equal(class(delta_flows$biop_2008_2009$s_dlt_inflow_cfs), "numeric")
+  expect_equal(class(delta_flows$biop_itp_2018_2019$s_dlt_inflow_cfs), "numeric")
+
+  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_div_cfs), "numeric")
+  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_div_cfs), "numeric")
+
+  expect_equal(class(delta_flows$biop_2008_2009$s_dlt_div_cfs), "numeric")
+  expect_equal(class(delta_flows$biop_itp_2018_2019$s_dlt_div_cfs), "numeric")
+
+  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_prop_div), "numeric")
+  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_prop_div), "numeric")
+
+  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_prop_div), "numeric")
+  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_prop_div), "numeric")
+
+  expect_equal(colnames(delta_flows$biop_2008_2009), col_names)
+  expect_equal(colnames(delta_flows$biop_itp_2018_2019), col_names)
+
+  expect_equal(dim(delta_inflow$biop_2008_2009), c(12L, 21L, 2L))
+  expect_equal(dim(delta_inflow$biop_itp_2018_2019), c(12L, 21L, 2L))
+
+  expect_equal(dim(delta_proportion_diverted$biop_2008_2009), c(12L, 21L, 2L))
+  expect_equal(dim(delta_proportion_diverted$biop_itp_2018_2019), c(12L, 21L, 2L))
+
+  expect_equal(dim(delta_total_diverted$biop_2008_2009), c(12L, 21L, 2L))
+  expect_equal(dim(delta_total_diverted$biop_itp_2018_2019), c(12L, 21L, 2L))
+
+  expect_equal(dim(delta_cross_channel_closed$biop_2008_2009), c(2L, 12L))
+  expect_equal(dim(delta_cross_channel_closed$biop_itp_2018_2019), c(2L, 12L))
   # think about testing to check that units seem right (not too small because that would be an indicator of cms)
   # Think about tests to catch outliers
 })

@@ -55,16 +55,16 @@ test_that("flow structure",  {
 
 years <- seq(1980,2000)
 years <- as.character(years)
-mean_flow_df <- map_df(years, function(i) {
-  DSMflow::mean_flow[, , i] %>%
+mean_flow_df_2008 <- map_df(years, function(i) {
+    mean_flow$biop_2008_2009[, , i] %>%
     as.data.frame() %>%
     mutate(year = i) %>%
     rownames_to_column(var = "watershed") %>%
     pivot_longer(cols = -c(watershed, year), names_to = "month", values_to = "flow_cms")
   })
 
-total_diverted_df <- map_df(years, function(i) {
-  DSMflow::total_diverted[, , i] %>%
+total_diverted_df_2008 <- map_df(years, function(i) {
+    total_diverted$biop_2008_2009[, , i] %>%
     as.data.frame() %>%
     mutate(year = i) %>%
     rownames_to_column(var = "watershed") %>%
@@ -72,34 +72,48 @@ total_diverted_df <- map_df(years, function(i) {
 })
 
 
-flows_filtered_df <- filter(flows_cfs, date >= as.Date("1980-01-01"),
+flows_filtered_df_2008 <- filter(flows_cfs$biop_2008_2009, date >= as.Date("1980-01-01"),
                             date <= as.Date("2000-12-31")) %>%
   mutate(year = as.character(year(date)),
          month = as.character(month(date, label = T, abbr = T))) %>%
   pivot_longer(cols = -c(date, year, month), names_to = "watershed", values_to = "flow_cfs") %>%
-  full_join(mean_flow_df) %>%
-  full_join(total_diverted_df)
+  filter(!(watershed %in% c("Lower-mid Sacramento River1", "Lower-mid Sacramento River2"))) |>
+  full_join(mean_flow_df_2008 |>
+              filter(!(watershed %in% c("Sutter Bypass", "Yolo Bypass", "Lower-mid Sacramento River")))) |>
+  full_join(total_diverted_df_2008 |>
+              filter(!(watershed %in% c("Sutter Bypass", "Yolo Bypass", "Lower-mid Sacramento River")))) |>
+  glimpse()
 
 test_that("flow_cfs equals mean_flow", {
-  expect_equal(cfs_to_cms(flows_filtered_df$flow_cfs), flows_filtered_df$flow_cms)
+  expect_equal(cfs_to_cms(flows_filtered_df_2008$flow_cfs), flows_filtered_df_2008$flow_cms)
 })
 
 # TODO Lower-mid Sacramento River1/2 doesn't exist in mean_flow but Lower-mid Sacramento River does.
 # TODO Sutter Bypass, Lower-mid Sacramento River, Yolo Bypass do not exist in flows_cfs
+# TODO just filtered these out in the join - need more elegant solution
 
 # total_diverted less than mean_flow -------------------------------------------
 test_that("total_diverted less than mean_flow", {
-  expect_true(all(flows_filtered_df$diverted_cms <= flows_filtered_df$flow_cms))
+  expect_true(all(flows_filtered_df_2008$diverted_cms <= flows_filtered_df_2008$flow_cms))
 })
 
 # TODO some cases where diverted is greater than mean flow
 
 # proportions less than 1 ------------------------------------------------------
 test_that("proportions less than 1", {
-  expect_true(all(proportion_diverted >= 0))
-  expect_true(all(proportion_diverted <= 1))
-  expect_true(all(proportion_flow_natal >= 0))
-  expect_true(all(proportion_flow_natal <= 1))
-  expect_true(all(proportion_pulse_flows >= 0))
-  expect_true(all(proportion_pulse_flows <= 1))
+  expect_true(all(proportion_diverted$biop_2008_2009 >= 0))
+  expect_true(all(proportion_diverted$biop_2008_2009 <= 1))
+  expect_true(all(proportion_flow_natal$biop_2008_2009 >= 0))
+  expect_true(all(proportion_flow_natal$biop_2008_2009 <= 1))
+  expect_true(all(proportion_pulse_flows$biop_2008_2009 >= 0))
+  expect_true(all(proportion_pulse_flows$biop_2008_2009 <= 1))
+
+  expect_true(all(proportion_diverted$biop_itp_2018_2019 >= 0))
+  expect_true(all(proportion_diverted$biop_itp_2018_2019 <= 1))
+  expect_true(all(proportion_flow_natal$biop_itp_2018_2019 >= 0))
+  expect_true(all(proportion_flow_natal$biop_itp_2018_2019 <= 1))
+  expect_true(all(proportion_pulse_flows$biop_itp_2018_2019 >= 0))
+  expect_true(all(proportion_pulse_flows$biop_itp_2018_2019 <= 1))
 })
+# TODO: some proportions are greater than 1
+# which(proportion_pulse_flows$biop_2008_2009 > 1, arr.ind=T)
