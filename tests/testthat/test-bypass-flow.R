@@ -8,18 +8,23 @@ library(lubridate)
 
 # gates_overtopped - structure
 
+# NOTE: using lapply on unnamed list to get dimensions of biop 2008 and biop 2018 list elements
+
 # structure --------------------------------------------------------------------
 
 test_that("structure", {
-  expect_equal(dim(bypass_flows), c(972, 7))
-  expect_equal(dim(proportion_flow_bypasses), c(12, 21, 2))
-  expect_equal(dim(gates_overtopped), c(12, 21, 2))
-  expect_equal(class(all(gates_overtopped)), "logical")
+  expect_equal(unlist(lapply(unname(bypass_flows), function(i) dim(i))), c(972, 7, 972, 7))
+
+  expect_equal(unlist(lapply(unname(proportion_flow_bypasses), function(i) dim(i))), c(12, 21, 2, 12, 21, 2))
+
+  expect_equal(unlist(lapply(unname(gates_overtopped), function(i) dim(i))), c(12, 21, 2, 12, 21, 2))
+
+  expect_equal(unlist(lapply(unname(gates_overtopped), function(i) class(all(i)))), c("logical", "logical"))
 })
 
 # proportion less than 1 -------------------------------------------------------
 
 test_that("proportion less than 1", {
-  expect_true(all(proportion_flow_bypasses >= 0))
-  expect_true(all(proportion_flow_bypasses <= 1))
+  expect_equal(unlist(lapply(unname(proportion_flow_bypasses), function(i) all(i >= 0))), c(TRUE, TRUE))
+  expect_equal(unlist(lapply(unname(proportion_flow_bypasses), function(i) all(i <= 1))), c(TRUE, TRUE))
 })
