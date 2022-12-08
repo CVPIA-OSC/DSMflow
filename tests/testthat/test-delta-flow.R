@@ -132,14 +132,28 @@ test_that("delta_inflow equal delta_flows", {
 })
 
 # proportion less than 1 -------------------------------------------
-delta_proportion_diverted_df <- map_df(c("North Delta", "South Delta"), function(i) {
-  DSMflow::delta_proportion_diverted[, , i] %>%
-    as.data.frame() %>%
-    mutate(location = i) %>%
-    rownames_to_column(var = "month") %>%
-    pivot_longer(cols = `1980`:`2000`,
-                 names_to = 'year',
-                 values_to = 'proportion_diverted')}) %>%
+delta_proportion_diverted_df_2008 <- map_df(c("North Delta", "South Delta"), function(i) {
+  delta_proportion_diverted$biop_2008_2009[, , i] %>%
+  as.data.frame() %>%
+  mutate(location = i) %>%
+  rownames_to_column(var = "month") %>%
+  pivot_longer(cols = `1980`:`2000`,
+               names_to = 'year',
+               values_to = 'proportion_diverted')}) %>%
+  pivot_wider(id_cols = c('month','year'),
+              names_from = location,
+              values_from = proportion_diverted) %>%
+  rename(n_dlt_proportion_diverted = `North Delta`,
+         s_dlt_proportion_diverted = `South Delta`)
+
+delta_proportion_diverted_df_2018 <- map_df(c("North Delta", "South Delta"), function(i) {
+  delta_proportion_diverted$biop_itp_2018_2019[, , i] %>%
+  as.data.frame() %>%
+  mutate(location = i) %>%
+  rownames_to_column(var = "month") %>%
+  pivot_longer(cols = `1980`:`2000`,
+               names_to = 'year',
+               values_to = 'proportion_diverted')}) %>%
   pivot_wider(id_cols = c('month','year'),
               names_from = location,
               values_from = proportion_diverted) %>%
@@ -147,36 +161,57 @@ delta_proportion_diverted_df <- map_df(c("North Delta", "South Delta"), function
          s_dlt_proportion_diverted = `South Delta`)
 
 # prepared delta_flows to compare to inflow
-delta_flows_filtered <- filter(DSMflow::delta_flows, date >= as.Date("1980-01-01"),
+delta_flows_filtered_2008 <- filter(delta_flows$biop_2008_2009, date >= as.Date("1980-01-01"),
                                date <= as.Date("2000-12-31")) %>%
   mutate(year = as.character(year(date)),
          month = as.character(month(date, label = T, abbr = T))) %>%
-  full_join(delta_proportion_diverted_df)
+  full_join(delta_proportion_diverted_df_2008)
+
+delta_flows_filtered_2018 <- filter(delta_flows$biop_itp_2018_2019, date >= as.Date("1980-01-01"),
+                                    date <= as.Date("2000-12-31")) %>%
+  mutate(year = as.character(year(date)),
+         month = as.character(month(date, label = T, abbr = T))) %>%
+  full_join(delta_proportion_diverted_df_2018)
 
 test_that("proportion less than 1", {
-  expect_true(all(delta_proportion_diverted >= 0))
-  expect_true(all(delta_proportion_diverted <= 1))
+  expect_true(all(delta_proportion_diverted$biop_2008_2009 >= 0))
+  expect_true(all(delta_proportion_diverted$biop_2008_2009 <= 1))
+
+  expect_true(all(delta_proportion_diverted$biop_itp_2018_2019 >= 0))
+  expect_true(all(delta_proportion_diverted$biop_itp_2018_2019 <= 1))
 
 })
 
 # delta_flows equals delta_proportion_diverted -------------------------------------------
 
 test_that("delta_flows equals delta_proportion_diverted", {
-  expect_equal(delta_flows_filtered$n_dlt_prop_div, delta_flows_filtered$n_dlt_proportion_diverted)
-  expect_equal(delta_flows_filtered$s_dlt_prop_div, delta_flows_filtered$s_dlt_proportion_diverted)
+  expect_equal(delta_flows_filtered_2008$n_dlt_prop_div, delta_flows_filtered_2008$n_dlt_proportion_diverted)
+  expect_equal(delta_flows_filtered_2008$s_dlt_prop_div, delta_flows_filtered_2008$s_dlt_proportion_diverted)
+
+  expect_equal(delta_flows_filtered_2018$n_dlt_prop_div, delta_flows_filtered_2018$n_dlt_proportion_diverted)
+  expect_equal(delta_flows_filtered_2018$s_dlt_prop_div, delta_flows_filtered_2018$s_dlt_proportion_diverted)
 })
 
 # delta_total_diverted greater than delta_proportion_diverted ------------------------------------------------
+# TODO delta_inflow is not > delta_total_diverted
 test_that("delta_total_diverted greater than delta_proportion_diverted", {
-  expect_true(all(delta_total_diverted > delta_proportion_diverted))
-  expect_true(all(delta_inflow > delta_total_diverted))
+  expect_true(all(delta_total_diverted$biop_2008_2009 > delta_proportion_diverted$biop_2008_2009))
+  expect_true(all(delta_inflow$biop_2008_2009 > delta_total_diverted$biop_2008_2009))
+
+  expect_true(all(delta_total_diverted$biop_itp_2018_2019 > delta_proportion_diverted$biop_itp_2018_2019))
+  expect_true(all(delta_inflow$biop_itp_2018_2019 > delta_total_diverted$biop_itp_2018_2019))
 })
 
 
 # proportion of days that overtopped ------------------------------------------
 test_that("proportion of days that overtopped", {
-  expect_true(all(delta_cross_channel_closed[2, ] >= 0))
-  expect_true(all(delta_cross_channel_closed[2, ] <= 1))
-  expect_true(all(delta_cross_channel_closed[1, ] <= 31))
-  expect_true(all(delta_cross_channel_closed[1, ] >= 0))
+  expect_true(all(delta_cross_channel_closed$biop_2008_2009[2, ] >= 0))
+  expect_true(all(delta_cross_channel_closed$biop_2008_2009[2, ] <= 1))
+  expect_true(all(delta_cross_channel_closed$biop_2008_2009[1, ] <= 31))
+  expect_true(all(delta_cross_channel_closed$biop_2008_2009[1, ] >= 0))
+
+  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[2, ] >= 0))
+  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[2, ] <= 1))
+  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[1, ] <= 31))
+  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[1, ] >= 0))
 })
