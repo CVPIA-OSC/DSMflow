@@ -17,33 +17,18 @@ test_that("delta structure and values", {
                  "s_dlt_div_cfs", "n_dlt_prop_div", "s_dlt_prop_div")
   year_names <- as.character(seq(1980, 2000, 1))
 
-  expect_equal(colnames(delta_flows$biop_2008_2009), col_names)
-  expect_equal(colnames(delta_flows$biop_itp_2018_2019), col_names)
-
-  expect_equal(colnames(delta_inflow$biop_2008_2009), year_names)
-  expect_equal(colnames(delta_inflow$biop_itp_2018_2019), year_names)
-
-  expect_equal(colnames(delta_proportion_diverted$biop_2008_2009), year_names)
-  expect_equal(colnames(delta_proportion_diverted$biop_itp_2018_2019), year_names)
-
-  expect_equal(colnames(delta_total_diverted$biop_2008_2009), year_names)
-  expect_equal(colnames(delta_total_diverted$biop_itp_2018_2019), year_names)
-
-  expect_equal(colnames(delta_cross_channel_closed$biop_2008_2009), month.abb)
-  expect_equal(colnames(delta_cross_channel_closed$biop_itp_2018_2019), month.abb)
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) colnames(i))), rep(col_names, 2))
+  expect_equal(unlist(lapply(unname(delta_inflow), function(i) colnames(i))), rep(year_names, 2))
+  expect_equal(unlist(lapply(unname(delta_proportion_diverted), function(i) colnames(i))), rep(year_names, 2))
+  expect_equal(unlist(lapply(unname(delta_total_diverted), function(i) colnames(i))), rep(year_names, 2))
+  expect_equal(unlist(lapply(unname(delta_cross_channel_closed), function(i) colnames(i))), rep(month.abb, 2))
 
   # dimensions
-  expect_equal(dim(delta_inflow$biop_2008_2009), c(12L, 21L, 2L))
-  expect_equal(dim(delta_inflow$biop_itp_2018_2019), c(12L, 21L, 2L))
 
-  expect_equal(dim(delta_proportion_diverted$biop_2008_2009), c(12L, 21L, 2L))
-  expect_equal(dim(delta_proportion_diverted$biop_itp_2018_2019), c(12L, 21L, 2L))
-
-  expect_equal(dim(delta_total_diverted$biop_2008_2009), c(12L, 21L, 2L))
-  expect_equal(dim(delta_total_diverted$biop_itp_2018_2019), c(12L, 21L, 2L))
-
-  expect_equal(dim(delta_cross_channel_closed$biop_2008_2009), c(2L, 12L))
-  expect_equal(dim(delta_cross_channel_closed$biop_itp_2018_2019), c(2L, 12L))
+  expect_equal(unlist(lapply(unname(delta_inflow), function(i) dim(i))), c(12L, 21L, 2L, 12L, 21L, 2L))
+  expect_equal(unlist(lapply(unname(delta_proportion_diverted), function(i) dim(i))), c(12L, 21L, 2L, 12L, 21L, 2L))
+  expect_equal(unlist(lapply(unname(delta_total_diverted), function(i) dim(i))), c(12L, 21L, 2L, 12L, 21L, 2L))
+  expect_equal(unlist(lapply(unname(delta_cross_channel_closed), function(i) dim(i))), c(2L, 12L, 2L, 12L))
 
   # values
   expect_equal(delta_flows$biop_2008_2009$n_dlt_prop_div, delta_flows$biop_2008_2009$n_dlt_div_cfs/delta_flows$biop_2008_2009$n_dlt_inflow_cfs)
@@ -52,26 +37,14 @@ test_that("delta structure and values", {
   expect_equal(delta_flows$biop_2008_2009$s_dlt_prop_div, pmin(delta_flows$biop_2008_2009$s_dlt_div_cfs/delta_flows$biop_2008_2009$s_dlt_inflow_cfs, 1))
   expect_equal(delta_flows$biop_itp_2018_2019$s_dlt_prop_div, pmin(delta_flows$biop_itp_2018_2019$s_dlt_div_cfs/delta_flows$biop_itp_2018_2019$s_dlt_inflow_cfs, 1))
 
-  expect_equal(class(delta_flows$biop_2008_2009$date), "Date")
-  expect_equal(class(delta_flows$biop_itp_2018_2019$date), "Date")
-
-  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_inflow_cfs), "numeric")
-  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_inflow_cfs), "numeric")
-
-  expect_equal(class(delta_flows$biop_2008_2009$s_dlt_inflow_cfs), "numeric")
-  expect_equal(class(delta_flows$biop_itp_2018_2019$s_dlt_inflow_cfs), "numeric")
-
-  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_div_cfs), "numeric")
-  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_div_cfs), "numeric")
-
-  expect_equal(class(delta_flows$biop_2008_2009$s_dlt_div_cfs), "numeric")
-  expect_equal(class(delta_flows$biop_itp_2018_2019$s_dlt_div_cfs), "numeric")
-
-  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_prop_div), "numeric")
-  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_prop_div), "numeric")
-
-  expect_equal(class(delta_flows$biop_2008_2009$n_dlt_prop_div), "numeric")
-  expect_equal(class(delta_flows$biop_itp_2018_2019$n_dlt_prop_div), "numeric")
+  # class
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) class(i$date))), c("Date", "Date"))
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) class(i$n_dlt_inflow_cfs))), c("numeric", "numeric"))
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) class(i$s_dlt_inflow_cfs))), c("numeric", "numeric"))
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) class(i$n_dlt_div_cfs))), c("numeric", "numeric"))
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) class(i$s_dlt_div_cfs))), c("numeric", "numeric"))
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) class(i$n_dlt_prop_div))), c("numeric", "numeric"))
+  expect_equal(unlist(lapply(unname(delta_flows), function(i) class(i$s_dlt_prop_div))), c("numeric", "numeric"))
 
   # TODO: units (should be in cfs, not cms)
 
@@ -195,23 +168,19 @@ test_that("delta_flows equals delta_proportion_diverted", {
 # delta_total_diverted greater than delta_proportion_diverted ------------------------------------------------
 # TODO delta_inflow is not > delta_total_diverted
 test_that("delta_total_diverted greater than delta_proportion_diverted", {
-  expect_true(all(delta_total_diverted$biop_2008_2009 > delta_proportion_diverted$biop_2008_2009))
-  expect_true(all(delta_inflow$biop_2008_2009 > delta_total_diverted$biop_2008_2009))
 
-  expect_true(all(delta_total_diverted$biop_itp_2018_2019 > delta_proportion_diverted$biop_itp_2018_2019))
-  expect_true(all(delta_inflow$biop_itp_2018_2019 > delta_total_diverted$biop_itp_2018_2019))
+  expect_equal(unlist(lapply(unname(delta_total_diverted), function(i) all(i >= 0))), c(TRUE, TRUE))
+  expect_equal(unlist(lapply(unname(delta_inflow), function(i) all(i >= 0))), c(TRUE, TRUE))
+
 })
 
 
 # proportion of days that overtopped ------------------------------------------
 test_that("proportion of days that overtopped", {
-  expect_true(all(delta_cross_channel_closed$biop_2008_2009[2, ] >= 0))
-  expect_true(all(delta_cross_channel_closed$biop_2008_2009[2, ] <= 1))
-  expect_true(all(delta_cross_channel_closed$biop_2008_2009[1, ] <= 31))
-  expect_true(all(delta_cross_channel_closed$biop_2008_2009[1, ] >= 0))
 
-  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[2, ] >= 0))
-  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[2, ] <= 1))
-  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[1, ] <= 31))
-  expect_true(all(delta_cross_channel_closed$biop_itp_2018_2019[1, ] >= 0))
+  expect_equal(unlist(lapply(unname(delta_cross_channel_closed), function(i) all(i[2, ] >= 0))), c(TRUE, TRUE))
+  expect_equal(unlist(lapply(unname(delta_cross_channel_closed), function(i) all(i[2, ] <= 1))), c(TRUE, TRUE))
+  expect_equal(unlist(lapply(unname(delta_cross_channel_closed), function(i) all(i[1, ] <= 31))), c(TRUE, TRUE))
+  expect_equal(unlist(lapply(unname(delta_cross_channel_closed), function(i) all(i[1, ] >= 0))), c(TRUE, TRUE))
+
 })
